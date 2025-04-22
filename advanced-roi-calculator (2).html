@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Marketing ROI Scenario Planner</title>
+    <style id="custom-styles">
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            background-color: #f5f7fa;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .result-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .result-box {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .result-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        .result-value {
+            font-size: 18px;
+            color: #16a085;
+        }
+        .info-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .funnel-visual {
+            margin: 30px auto;
+            max-width: 500px;
+        }
+        .funnel-step {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .funnel-step:nth-child(1) {
+            width: 100%;
+        }
+        .funnel-step:nth-child(2) {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .funnel-step:nth-child(3) {
+            width: 75%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .funnel-step:nth-child(4) {
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #16a085;
+        }
+        .funnel-label {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .funnel-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .slider-container {
+            margin-top: 10px;
+        }
+        .slider {
+            width: 100%;
+        }
+        .slider-value {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #ffffdd;
+            padding: 10px;
+            border-left: 4px solid #f1c40f;
+            margin: 15px 0;
+        }
+        .highlight {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .roi-positive {
+            color: #27ae60;
+        }
+        .roi-negative {
+            color: #e74c3c;
+        }
+        .summary-box {
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px solid #bde0f3;
+        }
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2980b9;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .btn {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        .btn-success {
+            background-color: #2ecc71;
+        }
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 5px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .mode-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .mode-option.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .scenario-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .scenario-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .scenario-value {
+            color: #16a085;
+        }
+        .heatmap-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .heatmap {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 2px;
+            margin: 20px 0;
+        }
+        .heatmap-cell {
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .heatmap-header {
+            background-color: #34495e;
+        }
+        .heatmap-row-header {
+            background-color: #34495e;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .comparison-table .better {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .comparison-table .worse {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .frequency-chart {
+            display: flex;
+            height: 200px;
+            align-items: flex-end;
+            margin-top: 20px;
+            border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .frequency-bar {
+            flex: 1;
+            background-color: #3498db;
+            margin: 0 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            min-width: 30px;
+        }
+        .frequency-value {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .frequency-label {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .color-picker-group {
+            margin-bottom: 15px;
+        }
+        .color-picker-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .color-preview {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Marketing ROI Scenario Planner</h1>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('input-tab')">Input Parameters</div>
+            <div class="tab" onclick="switchTab('scenarios-tab')">Scenario Comparison</div>
+            <div class="tab" onclick="switchTab('audience-tab')">Audience Planning</div>
+            <div class="tab" onclick="switchTab('sensitivity-tab')">Sensitivity Analysis</div>
+            <div class="tab" onclick="switchTab('settings-tab')">Settings</div>
+        </div>
+        
+        <!-- INPUT TAB -->
+        <div id="input-tab" class="tab-content active">
+            <div class="mode-toggle">
+                <div class="mode-option active" onclick="switchMode('impression-based')">Impression-Based</div>
+                <div class="mode-option" onclick="switchMode('goal-based')">Goal-Based</div>
+            </div>
+            
+            <div class="section">
+                <h2>Scenario Setup</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="scenario-name">Scenario Name:</label>
+                        <input type="text" id="scenario-name" value="Base Scenario" placeholder="Name your scenario">
+                    </div>
+                    <div class="input-group">
+                        <label for="preset-scenario">Preset Scenarios:</label>
+                        <select id="preset-scenario" onchange="loadPresetScenario()">
+                            <option value="custom">Custom</option>
+                            <option value="conservative">Conservative</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="aggressive">Aggressive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="impression-based-inputs">
+                <div class="section">
+                    <h2>Investment Parameters</h2>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="total-impressions">Total Impressions to Purchase:</label>
+                            <input type="number" id="total-impressions" value="2000000" min="100000" step="100000" oninput="calculateAll()">
+                            <div class="slider-container">
+                                <input type="range" min="100000" max="10000000" step="100000" value="2000000" class="slider" id="impressions-slider" oninput="updateImpressions()">
+                                <div class="slider-value" id="impressions-value">2,000,000</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="data-subscription-cost">Data Subscription Cost ($):</label>
+                            <input type="number" id="data-subscription-cost" value="50000" min="0" step="1000" oninput="calculateAll()">
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div id="cpm-rate-note">Current rate: $5.50 per 1,000 impressions</div>
+                        <div class="info-text">CPM Tiers: $5.50 (up to 2M), $5.00 (3-5M), $4.50 (5M+)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="goal-based-inputs" class="hidden">
+                <div class="section">
+                    <h2>Revenue Goals</h2>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="revenue-goal">Target Revenue ($):</label>
+                            <input type="number" id="revenue-goal" value="250000" min="10000" step="10000" oninput="calculateFromGoal()">
+                            <div class="slider-container">
+                                <input type="range" min="10000" max="1000000" step="10000" value="250000" class="slider" id="revenue-goal-slider" oninput="updateRevenueGoal()">
+                                <div class="slider-value" id="revenue-goal-value">$250,000</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="data-subscription-cost-goal">Data Subscription Cost ($):</label>
+                            <input type="number" id="data-subscription-cost-goal" value="50000" min="0" step="1000" oninput="calculateFromGoal()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Performance Metrics</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="ctr">Click-Through Rate (%):</label>
+                        <input type="number" id="ctr" value="2.5" min="0.1" max="10" step="0.1" oninput="calculateAll()">
+                        <div class="slider-container">
+                            <input type="range" min="0.1" max="10" step="0.1" value="2.5" class="slider" id="ctr-slider" oninput="updateCTR()">
+                            <div class="slider-value" id="ctr-value">2.5%</div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="cvr">Conversion Rate (%):</label>
+                        <input type="number" id="cvr" value="3" min="0.1" max="20" step="0.1" oninput="calculateAll()">
+                        <div class="slider-container">
+                            <input type="range" min="0.1" max="20" step="0.1" value="3" class="slider" id="cvr-slider" oninput="updateCVR()">
+                            <div class="slider-value" id="cvr-value">3.0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="avg-order-value">Avg. Reimbursement ($):</label>
+                        <input type="number" id="avg-order-value" value="120" min="10" max="1000" step="5" oninput="calculateAll()">
+                        <div class="slider-container">
+                            <input type="range" min="10" max="1000" step="5" value="120" class="slider" id="aov-slider" oninput="updateAOV()">
+                            <div class="slider-value" id="aov-value">$120</div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="impressions-per-person">Impressions Per Person:</label>
+                        <input type="number" id="impressions-per-person" value="5" min="1" max="20" step="1" oninput="calculateAll()">
+                        <div class="slider-container">
+                            <input type="range" min="1" max="20" step="1" value="5" class="slider" id="ipp-slider" oninput="updateIPP()">
+                            <div class="slider-value" id="ipp-value">5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Results</h2>
+                
+                <div class="funnel-visual">
+                    <div class="funnel-step">
+                        <div class="funnel-label">Impressions</div>
+                        <div class="funnel-value" id="funnel-impressions">2,000,000</div>
+                    </div>
+                    <div class="funnel-step">
+                        <div class="funnel-label">Clicks</div>
+                        <div class="funnel-value" id="funnel-clicks">50,000</div>
+                    </div>
+                    <div class="funnel-step">
+                        <div class="funnel-label">Conversions</div>
+                        <div class="funnel-value" id="funnel-conversions">1,500</div>
+                    </div>
+                    <div class="funnel-step">
+                        <div class="funnel-label">Revenue</div>
+                        <div class="funnel-value" id="funnel-revenue">$180,000</div>
+                    </div>
+                </div>
+                
+                <div class="result-row">
+                    <div class="result-box">
+                        <div class="result-title">Total Investment:</div>
+                        <div class="result-value" id="total-investment">$61,000</div>
+                        <div class="info-text">Subscription + Impression Costs</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Impression Cost:</div>
+                        <div class="result-value" id="impression-cost">$11,000</div>
+                        <div class="info-text" id="cost-detail">2M impressions at $5.50 CPM</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Target Audience Size:</div>
+                        <div class="result-value" id="target-audience-size">400,000</div>
+                        <div class="info-text">Based on impressions per person</div>
+                    </div>
+                </div>
+                
+                <div class="result-row">
+                    <div class="result-box">
+                        <div class="result-title">Total Revenue:</div>
+                        <div class="result-value" id="total-revenue">$180,000</div>
+                        <div class="info-text">Conversions × Avg. Reimbursement</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Net Return:</div>
+                        <div class="result-value" id="net-return">$119,000</div>
+                        <div class="info-text">Revenue - Total Investment</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Cost Per Acquisition:</div>
+                        <div class="result-value" id="cpa-value">$40.67</div>
+                        <div class="info-text">Total Investment ÷ Conversions</div>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <div class="result-row">
+                        <div class="result-box">
+                            <div class="result-title">ROI:</div>
+                            <div class="result-value" id="roi-value">195.08%</div>
+                            <div class="info-text">(Net Return ÷ Total Investment) × 100</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-title">ROAS (Return on Ad Spend):</div>
+                            <div class="result-value" id="roas-value">2.95</div>
+                            <div class="info-text">Revenue ÷ Total Investment</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-title">Revenue Per Impression:</div>
+                            <div class="result-value" id="revenue-per-impression">$0.09</div>
+                            <div class="info-text">Revenue ÷ Impressions</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-box">
+                    <div class="summary-title">Investment Summary</div>
+                    <p id="summary-text">With an investment of $61,000 ($50,000 subscription + $11,000 for 2,000,000 impressions), you can expect to generate $180,000 in revenue from 1,500 conversions. This provides a positive ROI of 195.08%, with a net return of $119,000.</p>
+                    <p id="recommendation-text">At current performance levels, this investment has a positive return. For even better results, focus on improving your conversion rate, which would have the greatest impact on your ROI.</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="saveScenario()">Save This Scenario</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SCENARIOS TAB -->
+        <div id="scenarios-tab" class="tab-content">
+            <div class="section">
+                <h2>Saved Scenarios</h2>
+                <div id="no-scenarios" class="note">
+                    No scenarios saved yet. Create and save scenarios from the Input Parameters tab.
+                </div>
+                <div id="scenarios-list"></div>
+                
+                <div id="scenarios-comparison" class="hidden">
+                    <h3>Scenario Comparison</h3>
+                    <div class="comparison-table-container">
+                        <table class="comparison-table" id="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <!-- Scenario headers will be added dynamically -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Table rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AUDIENCE TAB -->
+        <div id="audience-tab" class="tab-content">
+            <div class="section">
+                <h2>Audience Size & Frequency Planning</h2>
+                
+                <div class="mode-toggle">
+                    <div class="mode-option active" onclick="switchAudienceMode('audience-size')">Start with Audience Size</div>
+                    <div class="mode-option" onclick="switchAudienceMode('impressions')">Start with Impressions</div>
+                </div>
+                
+                <div id="audience-size-inputs">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="target-audience">Target Audience Size:</label>
+                            <input type="number" id="target-audience" value="400000" min="10000" step="10000" oninput="calculateFromAudience()">
+                            <div class="slider-container">
+                                <input type="range" min="10000" max="2000000" step="10000" value="400000" class="slider" id="audience-slider" oninput="updateTargetAudience()">
+                                <div class="slider-value" id="audience-value">400,000</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="frequency-cap">Frequency Cap (impressions per person):</label>
+                            <input type="number" id="frequency-cap" value="10" min="1" max="20" step="1" oninput="calculateFromAudience()">
+                            <div class="slider-container">
+                                <input type="range" min="1" max="20" step="1" value="10" class="slider" id="frequency-slider" oninput="updateFrequencyCap()">
+                                <div class="slider-value" id="frequency-value">10</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="target-frequency">Target Average Frequency:</label>
+                            <input type="number" id="target-frequency" value="5" min="1" max="20" step="0.5" oninput="calculateFromAudience()">
+                        </div>
+                        <div class="input-group">
+                            <label for="audience-cpm">Effective CPM Rate ($):</label>
+                            <input type="number" id="audience-cpm" value="5.5" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="impressions-inputs" class="hidden">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="available-impressions">Available Impressions:</label>
+                            <input type="number" id="available-impressions" value="2000000" min="100000" step="100000" oninput="calculateAudienceFromImpressions()">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-frequency-alt">Target Average Frequency:</label>
+                            <input type="number" id="target-frequency-alt" value="5" min="1" max="20" step="0.5" oninput="calculateAudienceFromImpressions()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-row">
+                    <div class="result-box">
+                        <div class="result-title">Total Impressions:</div>
+                        <div class="result-value" id="audience-total-impressions">2,000,000</div>
+                        <div class="info-text">Audience × Average Frequency</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Impression Cost:</div>
+                        <div class="result-value" id="audience-impression-cost">$11,000</div>
+                        <div class="info-text">Based on CPM tier pricing</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Reachable Audience:</div>
+                        <div class="result-value" id="reachable-audience">400,000</div>
+                        <div class="info-text">Given your constraints</div>
+                    </div>
+                </div>
+                
+                <h3>Frequency Distribution</h3>
+                <div class="frequency-chart" id="frequency-chart">
+                    <!-- Bars will be added dynamically -->
+                </div>
+                <div class="note">
+                    <p>The frequency distribution shows what percentage of your audience will see your ads a specific number of times.</p>
+                    <p>A balanced frequency distribution helps maximize reach while ensuring sufficient exposure to convert.</p>
+                </div>
+                
+                <div class="highlight">
+                    <h3>Expected Performance</h3>
+                    <div class="result-row">
+                        <div class="result-box">
+                            <div class="result-title">Expected Clicks:</div>
+                            <div class="result-value" id="audience-clicks">50,000</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-title">Expected Conversions:</div>
+                            <div class="result-value" id="audience-conversions">1,500</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-title">Expected Revenue:</div>
+                            <div class="result-value" id="audience-revenue">$180,000</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="applyAudienceSettings()">Apply These Settings to Main Calculator</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SENSITIVITY TAB -->
+        <div id="sensitivity-tab" class="tab-content">
+            <div class="section">
+                <h2>Sensitivity Analysis</h2>
+                
+                <div class="highlight">
+                    <h3>What If Analysis</h3>
+                    <p>See how changing one metric impacts your ROI while keeping all other metrics constant.</p>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="sensitivity-metric">Select Metric to Analyze:</label>
+                            <select id="sensitivity-metric" onchange="updateSensitivityChart()">
+                                <option value="ctr">Click-Through Rate (CTR)</option>
+                                <option value="cvr">Conversion Rate (CVR)</option>
+                                <option value="aov">Avg. Reimbursement</option>
+                                <option value="impressions">Total Impressions</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="sensitivity-range">Percentage Range (±):</label>
+                            <select id="sensitivity-range" onchange="updateSensitivityChart()">
+                                <option value="20">±20%</option>
+                                <option value="50" selected>±50%</option>
+                                <option value="100">±100%</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="sensitivity-chart" style="height: 300px; margin-top: 20px;">
+                        <!-- Chart will be generated dynamically -->
+                        <div style="text-align: center; padding: 20px;">Loading sensitivity chart...</div>
+                    </div>
+                </div>
+                
+                <h3>ROI Heatmap: CTR vs CVR</h3>
+                <p>See how different combinations of CTR and CVR affect your ROI</p>
+                
+                <div class="heatmap-container">
+                    <div class="heatmap" id="roi-heatmap">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <p>The ROI Heatmap shows how combinations of different CTR and CVR values affect your ROI:</p>
+                    <ul>
+                        <li>Green areas represent positive ROI</li>
+                        <li>Red areas represent negative ROI</li>
+                        <li>Darker colors represent more extreme values</li>
+                    </ul>
+                </div>
+                
+                <h3>Break-Even Analysis</h3>
+                <div class="result-row">
+                    <div class="result-box">
+                        <div class="result-title">Break-Even CTR:</div>
+                        <div class="result-value" id="breakeven-ctr">0.80%</div>
+                        <div class="info-text">Minimum CTR needed for positive ROI</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Break-Even CVR:</div>
+                        <div class="result-value" id="breakeven-cvr">0.96%</div>
+                        <div class="info-text">Minimum CVR needed for positive ROI</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title">Break-Even Impressions:</div>
+                        <div class="result-value" id="breakeven-impressions">643,000</div>
+                        <div class="info-text">Minimum impressions needed for positive ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SETTINGS TAB -->
+        <div id="settings-tab" class="tab-content">
+            <div class="section">
+                <h2>Color Settings</h2>
+                <p>Customize the colors of the calculator to match your brand or preferences.</p>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="primary-color-preview"></span>
+                                Primary Color:
+                            </label>
+                            <input type="color" id="primary-color" value="#3498db" oninput="updateColors()">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="secondary-color-preview"></span>
+                                Secondary Color:
+                            </label>
+                            <input type="color" id="secondary-color" value="#16a085" oninput="updateColors()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="positive-color-preview"></span>
+                                Positive Results Color:
+                            </label>
+                            <input type="color" id="positive-color" value="#27ae60" oninput="updateColors()">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="negative-color-preview"></span>
+                                Negative Results Color:
+                            </label>
+                            <input type="color" id="negative-color" value="#e74c3c" oninput="updateColors()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="highlight-color-preview"></span>
+                                Highlight Box Color:
+                            </label>
+                            <input type="color" id="highlight-color" value="#e8f4f8" oninput="updateColors()">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="note-color-preview"></span>
+                                Note Box Color:
+                            </label>
+                            <input type="color" id="note-color" value="#ffffdd" oninput="updateColors()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="funnel-color-preview"></span>
+                                Funnel Color:
+                            </label>
+                            <input type="color" id="funnel-color" value="#3498db" oninput="updateColors()">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="color-picker-group">
+                            <label class="color-picker-label">
+                                <span class="color-preview" id="funnel-end-color-preview"></span>
+                                Funnel End Color:
+                            </label>
+                            <input type="color" id="funnel-end-color" value="#16a085" oninput="updateColors()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="resetColors()">Reset to Defaults</button>
+                    <button class="btn btn-success" onclick="saveColors()">Save Colors</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize stored scenarios array
+        let scenarios = [];
+        
+        // Initialize with default values
+        window.onload = function() {
+            calculateAll();
+            updateHeatmap();
+            updateSensitivityChart();
+            updateFrequencyChart();
+            initializeColorPickers();
+            loadSavedColors();
+        };
+        
+        // Tab switching
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activate the clicked tab
+            event.currentTarget.classList.add('active');
+            
+            // Refresh charts if needed
+            if (tabId === 'sensitivity-tab') {
+                updateHeatmap();
+                updateSensitivityChart();
+            } else if (tabId === 'audience-tab') {
+                updateFrequencyChart();
+            } else if (tabId === 'scenarios-tab') {
+                updateScenariosList();
+            }
+        }
+        
+        // Mode switching
+        function switchMode(mode) {
+            if (mode === 'impression-based') {
+                document.getElementById('impression-based-inputs').classList.remove('hidden');
+                document.getElementById('goal-based-inputs').classList.add('hidden');
+                
+                document.querySelectorAll('.mode-option').forEach(option => {
+                    option.classList.remove('active');
+                });
+                document.querySelector('.mode-option:nth-child(1)').classList.add('active');
+                
+                calculateAll();
+            } else if (mode === 'goal-based') {
+                document.getElementById('impression-based-inputs').classList.add('hidden');
+                document.getElementById('goal-based-inputs').classList.remove('hidden');
+                
+                document.querySelectorAll('.mode-option').forEach(option => {
+                    option.classList.remove('active');
+                });
+                document.querySelector('.mode-option:nth-child(2)').classList.add('active');
+                
+                // Sync the subscription cost between modes
+                document.getElementById('data-subscription-cost-goal').value = document.getElementById('data-subscription-cost').value;
+                
+                calculateFromGoal();
+            }
+        }
+        
+        // Audience mode switching
+        function switchAudienceMode(mode) {
+            if (mode === 'audience-size') {
+                document.getElementById('audience-size-inputs').classList.remove('hidden');
+                document.getElementById('impressions-inputs').classList.add('hidden');
+                
+                document.querySelectorAll('#audience-tab .mode-option').forEach(option => {
+                    option.classList.remove('active');
+                });
+                document.querySelector('#audience-tab .mode-option:nth-child(1)').classList.add('active');
+                
+                calculateFromAudience();
+            } else if (mode === 'impressions') {
+                document.getElementById('audience-size-inputs').classList.add('hidden');
+                document.getElementById('impressions-inputs').classList.remove('hidden');
+                
+                document.querySelectorAll('#audience-tab .mode-option').forEach(option => {
+                    option.classList.remove('active');
+                });
+                document.querySelector('#audience-tab .mode-option:nth-child(2)').classList.add('active');
+                
+                calculateAudienceFromImpressions();
+            }
+        }
+        
+        // Slider update functions
+        function updateImpressions() {
+            const impressionsSlider = document.getElementById("impressions-slider");
+            const impressionsInput = document.getElementById("total-impressions");
+            const impressionsValue = document.getElementById("impressions-value");
+            
+            impressionsInput.value = impressionsSlider.value;
+            impressionsValue.textContent = formatNumber(parseInt(impressionsSlider.value));
+            
+            calculateAll();
+        }
+        
+        function updateCTR() {
+            const ctrSlider = document.getElementById("ctr-slider");
+            const ctrInput = document.getElementById("ctr");
+            const ctrValue = document.getElementById("ctr-value");
+            
+            ctrInput.value = ctrSlider.value;
+            ctrValue.textContent = parseFloat(ctrSlider.value).toFixed(1) + "%";
+            
+            calculateAll();
+        }
+        
+        function updateCVR() {
+            const cvrSlider = document.getElementById("cvr-slider");
+            const cvrInput = document.getElementById("cvr");
+            const cvrValue = document.getElementById("cvr-value");
+            
+            cvrInput.value = cvrSlider.value;
+            cvrValue.textContent = parseFloat(cvrSlider.value).toFixed(1) + "%";
+            
+            calculateAll();
+        }
+        
+        function updateAOV() {
+            const aovSlider = document.getElementById("aov-slider");
+            const aovInput = document.getElementById("avg-order-value");
+            const aovValue = document.getElementById("aov-value");
+            
+            aovInput.value = aovSlider.value;
+            aovValue.textContent = "$" + parseInt(aovSlider.value);
+            
+            calculateAll();
+        }
+        
+        function updateIPP() {
+            const ippSlider = document.getElementById("ipp-slider");
+            const ippInput = document.getElementById("impressions-per-person");
+            const ippValue = document.getElementById("ipp-value");
+            
+            ippInput.value = ippSlider.value;
+            ippValue.textContent = parseInt(ippSlider.value);
+            
+            calculateAll();
+        }
+        
+        function updateRevenueGoal() {
+            const revenueGoalSlider = document.getElementById("revenue-goal-slider");
+            const revenueGoalInput = document.getElementById("revenue-goal");
+            const revenueGoalValue = document.getElementById("revenue-goal-value");
+            
+            revenueGoalInput.value = revenueGoalSlider.value;
+            revenueGoalValue.textContent = "$" + formatNumber(parseInt(revenueGoalSlider.value));
+            
+            calculateFromGoal();
+        }
+        
+        function updateTargetAudience() {
+            const audienceSlider = document.getElementById("audience-slider");
+            const audienceInput = document.getElementById("target-audience");
+            const audienceValue = document.getElementById("audience-value");
+            
+            audienceInput.value = audienceSlider.value;
+            audienceValue.textContent = formatNumber(parseInt(audienceSlider.value));
+            
+            calculateFromAudience();
+        }
+        
+        function updateFrequencyCap() {
+            const frequencySlider = document.getElementById("frequency-slider");
+            const frequencyInput = document.getElementById("frequency-cap");
+            const frequencyValue = document.getElementById("frequency-value");
+            
+            frequencyInput.value = frequencySlider.value;
+            frequencyValue.textContent = parseInt(frequencySlider.value);
+            
+            calculateFromAudience();
+        }
+        
+        // Calculate CPM based on volume
+        function calculateDataCPM(impressions) {
+            // Calculate CPM based on volume tiers
+            if (impressions <= 2000000) {
+                return 5.5;
+            } else if (impressions <= 5000000) {
+                return 5.0;
+            } else {
+                return 4.5;
+            }
+        }
+        
+        // Main calculation function for impression-based mode
+        function calculateAll() {
+            // Get input values
+            const totalImpressions = parseInt(document.getElementById("total-impressions").value) || 0;
+            const dataSubscriptionCost = parseInt(document.getElementById("data-subscription-cost").value) || 0;
+            const ctr = parseFloat(document.getElementById("ctr").value) || 0;
+            const cvr = parseFloat(document.getElementById("cvr").value) || 0;
+            const avgOrderValue = parseFloat(document.getElementById("avg-order-value").value) || 0;
+            const impressionsPerPerson = parseFloat(document.getElementById("impressions-per-person").value) || 1;
+            
+            // Calculate data CPM rate and impression cost
+            const dataCPMRate = calculateDataCPM(totalImpressions);
+            const impressionCost = (totalImpressions / 1000) * dataCPMRate;
+            
+            // Update CPM rate note
+            document.getElementById("cpm-rate-note").textContent = `Current rate: $${dataCPMRate.toFixed(2)} per 1,000 impressions`;
+            
+            // Calculate total investment
+            const totalInvestment = dataSubscriptionCost + impressionCost;
+            
+            // Calculate performance metrics
+            const clicks = totalImpressions * (ctr / 100);
+            const conversions = clicks * (cvr / 100);
+            const revenue = conversions * avgOrderValue;
+            
+            // Calculate financial metrics
+            const netReturn = revenue - totalInvestment;
+            const roi = (netReturn / totalInvestment) * 100;
+            
+            // Calculate per-unit metrics
+            const cpa = totalInvestment / conversions;
+            const revenuePerImpression = revenue / totalImpressions;
+            const roas = revenue / totalInvestment;
+            
+            // Calculate target audience size
+            const targetAudienceSize = totalImpressions / impressionsPerPerson;
+            
+            // Update cost detail
+            document.getElementById("cost-detail").textContent = `${formatNumber(totalImpressions)} impressions at $${dataCPMRate.toFixed(2)} CPM`;
+            
+            // Update funnel visualization
+            document.getElementById("funnel-impressions").textContent = formatNumber(totalImpressions);
+            document.getElementById("funnel-clicks").textContent = formatNumber(clicks);
+            document.getElementById("funnel-conversions").textContent = formatNumber(conversions);
+            document.getElementById("funnel-revenue").textContent = "$" + formatNumber(revenue);
+            
+            // Update result values
+            document.getElementById("total-investment").textContent = "$" + formatNumber(totalInvestment);
+            document.getElementById("impression-cost").textContent = "$" + formatNumber(impressionCost);
+            document.getElementById("target-audience-size").textContent = formatNumber(targetAudienceSize);
+            document.getElementById("total-revenue").textContent = "$" + formatNumber(revenue);
+            document.getElementById("net-return").textContent = "$" + formatNumber(netReturn);
+            document.getElementById("cpa-value").textContent = "$" + formatNumber(cpa, 2);
+            document.getElementById("revenue-per-impression").textContent = "$" + formatNumber(revenuePerImpression, 2);
+            document.getElementById("roas-value").textContent = formatNumber(roas, 2);
+            
+            // Update ROI with color coding
+            const roiElement = document.getElementById("roi-value");
+            roiElement.textContent = formatNumber(roi, 2) + "%";
+            if (roi >= 0) {
+                roiElement.className = "result-value roi-positive";
+            } else {
+                roiElement.className = "result-value roi-negative";
+            }
+            
+            // Update summary text
+            const summaryText = `With an investment of $${formatNumber(totalInvestment)} ($${formatNumber(dataSubscriptionCost)} subscription + $${formatNumber(impressionCost)} for ${formatNumber(totalImpressions)} impressions), you can expect to generate $${formatNumber(revenue)} in revenue from ${formatNumber(conversions)} conversions. This provides a ${roi >= 0 ? "positive" : "negative"} ROI of ${formatNumber(roi, 2)}%, with a ${netReturn >= 0 ? "net return" : "net loss"} of $${formatNumber(Math.abs(netReturn))}.`;
+            document.getElementById("summary-text").textContent = summaryText;
+            
+            // Generate recommendation based on current metrics
+            let recommendation = "";
+            if (roi < 0) {
+                // Find which metric would have the biggest impact if improved
+                const ctrImpact = calculateImpactOfImprovement("ctr", 30);
+                const cvrImpact = calculateImpactOfImprovement("cvr", 30);
+                const aovImpact = calculateImpactOfImprovement("aov", 30);
+                
+                const maxImpact = Math.max(ctrImpact, cvrImpact, aovImpact);
+                
+                if (maxImpact === ctrImpact) {
+                    recommendation = "To achieve positive ROI, focus on improving your Click-Through Rate through better creative and targeting.";
+                } else if (maxImpact === cvrImpact) {
+                    recommendation = "To achieve positive ROI, focus on improving your Conversion Rate through better landing pages and user experience.";
+                } else {
+                    recommendation = "To achieve positive ROI, focus on increasing your Average Reimbursement through premium offerings.";
+                }
+            } else if (roi < 50) {
+                recommendation = "At current performance levels, this investment has a positive return. For even better results, focus on improving your conversion rate, which would have the greatest impact on your ROI.";
+            } else {
+                recommendation = "Your current metrics show strong ROI. Consider scaling your investment by purchasing more impressions to further increase your total return.";
+            }
+            
+            document.getElementById("recommendation-text").textContent = recommendation;
+            
+            // Also update the audience tab values for consistency
+            document.getElementById("available-impressions").value = totalImpressions;
+            document.getElementById("target-frequency-alt").value = impressionsPerPerson;
+            document.getElementById("target-audience").value = targetAudienceSize;
+            document.getElementById("frequency-cap").value = Math.min(20, impressionsPerPerson * 2);
+            document.getElementById("target-frequency").value = impressionsPerPerson;
+            
+            calculateFromAudience();
+            
+            // Calculate breakeven points for sensitivity tab
+            calculateBreakEvenPoints(dataSubscriptionCost, avgOrderValue, ctr, cvr, totalImpressions);
+            
+            return {
+                totalImpressions,
+                dataCPMRate,
+                impressionCost,
+                dataSubscriptionCost,
+                totalInvestment,
+                ctr,
+                cvr,
+                avgOrderValue,
+                impressionsPerPerson,
+                clicks,
+                conversions,
+                revenue,
+                netReturn,
+                roi,
+                cpa,
+                revenuePerImpression,
+                roas,
+                targetAudienceSize
+            };
+        }
+        
+        // Calculate from revenue goal
+        function calculateFromGoal() {
+            // Get input values
+            const revenueGoal = parseFloat(document.getElementById("revenue-goal").value) || 0;
+            const dataSubscriptionCost = parseInt(document.getElementById("data-subscription-cost-goal").value) || 0;
+            const ctr = parseFloat(document.getElementById("ctr").value) || 0;
+            const cvr = parseFloat(document.getElementById("cvr").value) || 0;
+            const avgOrderValue = parseFloat(document.getElementById("avg-order-value").value) || 0;
+            const impressionsPerPerson = parseFloat(document.getElementById("impressions-per-person").value) || 1;
+            
+            // Calculate backwards from revenue goal
+            const requiredConversions = revenueGoal / avgOrderValue;
+            const requiredClicks = requiredConversions / (cvr / 100);
+            const requiredImpressions = requiredClicks / (ctr / 100);
+            
+            // Calculate CPM and costs
+            const dataCPMRate = calculateDataCPM(requiredImpressions);
+            const impressionCost = (requiredImpressions / 1000) * dataCPMRate;
+            const totalInvestment = dataSubscriptionCost + impressionCost;
+            
+            // Update the regular mode inputs
+            document.getElementById("total-impressions").value = Math.round(requiredImpressions);
+            document.getElementById("impressions-slider").value = Math.min(10000000, Math.max(100000, Math.round(requiredImpressions)));
+            document.getElementById("impressions-value").textContent = formatNumber(Math.round(requiredImpressions));
+            document.getElementById("data-subscription-cost").value = dataSubscriptionCost;
+            
+            // Calculate the rest as normal
+            calculateAll();
+        }
+        
+        // Calculate impact of improvement
+        function calculateImpactOfImprovement(metric, percentImprovement) {
+            // Get current values
+            const totalImpressions = parseInt(document.getElementById("total-impressions").value) || 0;
+            const dataSubscriptionCost = parseInt(document.getElementById("data-subscription-cost").value) || 0;
+            const currentCTR = parseFloat(document.getElementById("ctr").value) || 0;
+            const currentCVR = parseFloat(document.getElementById("cvr").value) || 0;
+            const currentAOV = parseFloat(document.getElementById("avg-order-value").value) || 0;
+            
+            // Calculate impression cost
+            const dataCPMRate = calculateDataCPM(totalImpressions);
+            const impressionCost = (totalImpressions / 1000) * dataCPMRate;
+            const totalInvestment = dataSubscriptionCost + impressionCost;
+            
+            // Create improved values
+            let improvedCTR = currentCTR;
+            let improvedCVR = currentCVR;
+            let improvedAOV = currentAOV;
+            
+            // Apply improvement to the specified metric
+            if (metric === "ctr") {
+                improvedCTR = currentCTR * (1 + percentImprovement / 100);
+            } else if (metric === "cvr") {
+                improvedCVR = currentCVR * (1 + percentImprovement / 100);
+            } else if (metric === "aov") {
+                improvedAOV = currentAOV * (1 + percentImprovement / 100);
+            }
+            
+            // Calculate new revenue and ROI
+            const clicks = totalImpressions * (improvedCTR / 100);
+            const conversions = clicks * (improvedCVR / 100);
+            const revenue = conversions * improvedAOV;
+            const netReturn = revenue - totalInvestment;
+            const improvedROI = (netReturn / totalInvestment) * 100;
+            
+            // Return the ROI impact
+            return improvedROI;
+        }
+        
+        // Calculate ROI for sensitivity analysis
+        function calculateROI(impressions, ctr, cvr, avgOrderValue, dataSubscriptionCost) {
+            const dataCPMRate = calculateDataCPM(impressions);
+            const impressionCost = (impressions / 1000) * dataCPMRate;
+            const totalInvestment = dataSubscriptionCost + impressionCost;
+            
+            const clicks = impressions * (ctr / 100);
+            const conversions = clicks * (cvr / 100);
+            const revenue = conversions * avgOrderValue;
+            
+            const netReturn = revenue - totalInvestment;
+            const roi = (netReturn / totalInvestment) * 100;
+            
+            return roi;
+        }
+        
+        // Calculate breakeven points
+        function calculateBreakEvenPoints(dataSubscriptionCost, avgOrderValue, currentCTR, currentCVR, currentImpressions) {
+            // For breakeven CTR (keeping all else constant)
+            let low = 0.1;
+            let high = 10;
+            let mid;
+            let roi;
+            
+            // Binary search for breakeven CTR
+            for (let i = 0; i < 20; i++) {
+                mid = (low + high) / 2;
+                roi = calculateROI(currentImpressions, mid, currentCVR, avgOrderValue, dataSubscriptionCost);
+                
+                if (Math.abs(roi) < 0.01) break;
+                
+                if (roi < 0) {
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+            
+            const breakevenCTR = mid;
+            document.getElementById("breakeven-ctr").textContent = breakevenCTR.toFixed(2) + "%";
+            
+            // For breakeven CVR (keeping all else constant)
+            low = 0.1;
+            high = 10;
+            
+            // Binary search for breakeven CVR
+            for (let i = 0; i < 20; i++) {
+                mid = (low + high) / 2;
+                roi = calculateROI(currentImpressions, currentCTR, mid, avgOrderValue, dataSubscriptionCost);
+                
+                if (Math.abs(roi) < 0.01) break;
+                
+                if (roi < 0) {
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+            
+            const breakevenCVR = mid;
+            document.getElementById("breakeven-cvr").textContent = breakevenCVR.toFixed(2) + "%";
+            
+            // For breakeven impressions (keeping all else constant)
+            low = 100000;
+            high = 10000000;
+            
+            // Binary search for breakeven impressions
+            for (let i = 0; i < 20; i++) {
+                mid = Math.floor((low + high) / 2);
+                roi = calculateROI(mid, currentCTR, currentCVR, avgOrderValue, dataSubscriptionCost);
+                
+                if (Math.abs(roi) < 0.01) break;
+                
+                if (roi > 0) {
+                    high = mid;
+                } else {
+                    low = mid;
+                }
+            }
+            
+            const breakevenImpressions = mid;
+            document.getElementById("breakeven-impressions").textContent = formatNumber(breakevenImpressions);
+        }
+        
+        // Save current scenario
+        function saveScenario() {
+            const scenarioName = document.getElementById("scenario-name").value || "Unnamed Scenario";
+            const scenarioData = calculateAll();
+            
+            // Add name to the scenario data
+            scenarioData.name = scenarioName;
+            
+            // Add to scenarios array
+            scenarios.push(scenarioData);
+            
+            // Show success message
+            alert(`Scenario "${scenarioName}" saved successfully!`);
+            
+            // Update scenarios list if on that tab
+            if (document.getElementById("scenarios-tab").classList.contains("active")) {
+                updateScenariosList();
+            }
+        }
+        
+        // Load preset scenario
+        function loadPresetScenario() {
+            const preset = document.getElementById("preset-scenario").value;
+            
+            switch(preset) {
+                case "conservative":
+                    document.getElementById("scenario-name").value = "Conservative Scenario";
+                    document.getElementById("total-impressions").value = 1000000;
+                    document.getElementById("data-subscription-cost").value = 25000;
+                    document.getElementById("ctr").value = 1.0;
+                    document.getElementById("cvr").value = 5.0;
+                    document.getElementById("avg-order-value").value = 100;
+                    document.getElementById("impressions-per-person").value = 3;
+                    
+                    // Update sliders
+                    document.getElementById("impressions-slider").value = 1000000;
+                    document.getElementById("impressions-value").textContent = "1,000,000";
+                    document.getElementById("ctr-slider").value = 1.0;
+                    document.getElementById("ctr-value").textContent = "1.0%";
+                    document.getElementById("cvr-slider").value = 5.0;
+                    document.getElementById("cvr-value").textContent = "5.0%";
+                    document.getElementById("aov-slider").value = 100;
+                    document.getElementById("aov-value").textContent = "$100";
+                    document.getElementById("ipp-slider").value = 3;
+                    document.getElementById("ipp-value").textContent = "3";
+                    break;
+                    
+                case "moderate":
+                    document.getElementById("scenario-name").value = "Moderate Scenario";
+                    document.getElementById("total-impressions").value = 2000000;
+                    document.getElementById("data-subscription-cost").value = 35000;
+                    document.getElementById("ctr").value = 3.0;
+                    document.getElementById("cvr").value = 10.0;
+                    document.getElementById("avg-order-value").value = 120;
+                    document.getElementById("impressions-per-person").value = 5;
+                    
+                    // Update sliders
+                    document.getElementById("impressions-slider").value = 2000000;
+                    document.getElementById("impressions-value").textContent = "2,000,000";
+                    document.getElementById("ctr-slider").value = 3.0;
+                    document.getElementById("ctr-value").textContent = "3.0%";
+                    document.getElementById("cvr-slider").value = 10.0;
+                    document.getElementById("cvr-value").textContent = "10.0%";
+                    document.getElementById("aov-slider").value = 120;
+                    document.getElementById("aov-value").textContent = "$120";
+                    document.getElementById("ipp-slider").value = 5;
+                    document.getElementById("ipp-value").textContent = "5";
+                    break;
+                    
+                case "aggressive":
+                    document.getElementById("scenario-name").value = "Aggressive Scenario";
+                    document.getElementById("total-impressions").value = 5000000;
+                    document.getElementById("data-subscription-cost").value = 50000;
+                    document.getElementById("ctr").value = 6.0;
+                    document.getElementById("cvr").value = 20.0;
+                    document.getElementById("avg-order-value").value = 150;
+                    document.getElementById("impressions-per-person").value = 8;
+                    
+                    // Update sliders
+                    document.getElementById("impressions-slider").value = 5000000;
+                    document.getElementById("impressions-value").textContent = "5,000,000";
+                    document.getElementById("ctr-slider").value = 6.0;
+                    document.getElementById("ctr-value").textContent = "6.0%";
+                    document.getElementById("cvr-slider").value = 20.0;
+                    document.getElementById("cvr-value").textContent = "20.0%";
+                    document.getElementById("aov-slider").value = 150;
+                    document.getElementById("aov-value").textContent = "$150";
+                    document.getElementById("ipp-slider").value = 8;
+                    document.getElementById("ipp-value").textContent = "8";
+                    break;
+            }
+            
+            calculateAll();
+        }
+        
+        // Update scenarios list
+        function updateScenariosList() {
+            const scenariosList = document.getElementById("scenarios-list");
+            const noScenariosMessage = document.getElementById("no-scenarios");
+            const scenariosComparison = document.getElementById("scenarios-comparison");
+            
+            // Clear current list
+            scenariosList.innerHTML = '';
+            
+            if (scenarios.length === 0) {
+                noScenariosMessage.classList.remove('hidden');
+                scenariosComparison.classList.add('hidden');
+                return;
+            }
+            
+            noScenariosMessage.classList.add('hidden');
+            scenariosComparison.classList.remove('hidden');
+            
+            // Add scenario cards
+            scenarios.forEach((scenario, index) => {
+                const scenarioCard = document.createElement('div');
+                scenarioCard.className = 'scenario-card';
+                scenarioCard.innerHTML = `
+                    <div class="scenario-header">
+                        <div class="scenario-title">${scenario.name}</div>
+                        <div>
+                            <button class="btn" onclick="loadSavedScenario(${index})">Load</button>
+                            <button class="btn btn-secondary" onclick="deleteScenario(${index})">Delete</button>
+                        </div>
+                    </div>
+                    <div class="scenario-details">
+                        <div><strong>Impressions:</strong> <span class="scenario-value">${formatNumber(scenario.totalImpressions)}</span></div>
+                        <div><strong>Investment:</strong> <span class="scenario-value">$${formatNumber(scenario.totalInvestment)}</span></div>
+                        <div><strong>Revenue:</strong> <span class="scenario-value">$${formatNumber(scenario.revenue)}</span></div>
+                        <div><strong>ROI:</strong> <span class="scenario-value ${scenario.roi >= 0 ? 'roi-positive' : 'roi-negative'}">${formatNumber(scenario.roi, 2)}%</span></div>
+                    </div>
+                `;
+                
+                scenariosList.appendChild(scenarioCard);
+            });
+            
+            // Update comparison table
+            updateComparisonTable();
+        }
+        
+        // Update comparison table
+        function updateComparisonTable() {
+            const table = document.getElementById("comparison-table");
+            
+            // Clear existing table content
+            table.innerHTML = '';
+            
+            // Create header row
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>Metric</th>';
+            
+            // Add scenario names to header
+            scenarios.forEach(scenario => {
+                headerRow.innerHTML += `<th>${scenario.name}</th>`;
+            });
+            
+            // Add a "Difference" column if there are exactly 2 scenarios
+            if (scenarios.length === 2) {
+                headerRow.innerHTML += '<th>Difference</th>';
+            }
+            
+            const thead = document.createElement('thead');
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            // Create table body
+            const tbody = document.createElement('tbody');
+            
+            // Define metrics to display
+            const metrics = [
+                { name: 'Total Impressions', key: 'totalImpressions', format: (v) => formatNumber(v) },
+                { name: 'Subscription Cost', key: 'dataSubscriptionCost', format: (v) => '$' + formatNumber(v) },
+                { name: 'Impression Cost', key: 'impressionCost', format: (v) => '$' + formatNumber(v) },
+                { name: 'Total Investment', key: 'totalInvestment', format: (v) => '$' + formatNumber(v) },
+                { name: 'CTR', key: 'ctr', format: (v) => v.toFixed(2) + '%' },
+                { name: 'CVR', key: 'cvr', format: (v) => v.toFixed(2) + '%' },
+                { name: 'Avg. Reimbursement', key: 'avgOrderValue', format: (v) => '$' + v.toFixed(2) },
+                { name: 'Clicks', key: 'clicks', format: (v) => formatNumber(v) },
+                { name: 'Conversions', key: 'conversions', format: (v) => formatNumber(v) },
+                { name: 'Revenue', key: 'revenue', format: (v) => '$' + formatNumber(v) },
+                { name: 'Net Return', key: 'netReturn', format: (v) => '$' + formatNumber(v) },
+                { name: 'ROI', key: 'roi', format: (v) => v.toFixed(2) + '%' },
+                { name: 'CPA', key: 'cpa', format: (v) => '$' + v.toFixed(2) },
+                { name: 'ROAS', key: 'roas', format: (v) => v.toFixed(2) }
+            ];
+            
+            // Create a row for each metric
+            metrics.forEach(metric => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td><strong>${metric.name}</strong></td>`;
+                
+                // Add values for each scenario
+                scenarios.forEach(scenario => {
+                    row.innerHTML += `<td>${metric.format(scenario[metric.key])}</td>`;
+                });
+                
+                // Add difference column if comparing exactly 2 scenarios
+                if (scenarios.length === 2) {
+                    const diff = scenarios[1][metric.key] - scenarios[0][metric.key];
+                    const pctChange = (diff / Math.abs(scenarios[0][metric.key])) * 100;
+                    let diffText = '';
+                    
+                    // Format differently based on whether higher is better
+                    if (['revenue', 'clicks', 'conversions', 'netReturn', 'roi', 'roas'].includes(metric.key)) {
+                        // Higher is better
+                        const className = diff > 0 ? 'better' : (diff < 0 ? 'worse' : '');
+                        diffText = `<span class="${className}">${diff > 0 ? '+' : ''}${Math.abs(pctChange).toFixed(2)}%</span>`;
+                    } else if (['cpa', 'totalInvestment', 'impressionCost', 'dataSubscriptionCost'].includes(metric.key)) {
+                        // Lower is better
+                        const className = diff < 0 ? 'better' : (diff > 0 ? 'worse' : '');
+                        diffText = `<span class="${className}">${diff > 0 ? '+' : ''}${Math.abs(pctChange).toFixed(2)}%</span>`;
+                    } else {
+                        // Neutral
+                        diffText = `${diff > 0 ? '+' : ''}${Math.abs(pctChange).toFixed(2)}%`;
+                    }
+                    
+                    row.innerHTML += `<td>${diffText}</td>`;
+                }
+                
+                tbody.appendChild(row);
+            });
+            
+            table.appendChild(tbody);
+        }
+        
+        // Load a saved scenario
+        function loadSavedScenario(index) {
+            const scenario = scenarios[index];
+            
+            // Update input fields
+            document.getElementById("scenario-name").value = scenario.name;
+            document.getElementById("total-impressions").value = scenario.totalImpressions;
+            document.getElementById("data-subscription-cost").value = scenario.dataSubscriptionCost;
+            document.getElementById("ctr").value = scenario.ctr;
+            document.getElementById("cvr").value = scenario.cvr;
+            document.getElementById("avg-order-value").value = scenario.avgOrderValue;
+            document.getElementById("impressions-per-person").value = scenario.impressionsPerPerson;
+            
+            // Update sliders
+            document.getElementById("impressions-slider").value = Math.min(10000000, Math.max(100000, scenario.totalImpressions));
+            document.getElementById("impressions-value").textContent = formatNumber(scenario.totalImpressions);
+            document.getElementById("ctr-slider").value = scenario.ctr;
+            document.getElementById("ctr-value").textContent = scenario.ctr.toFixed(1) + "%";
+            document.getElementById("cvr-slider").value = scenario.cvr;
+            document.getElementById("cvr-value").textContent = scenario.cvr.toFixed(1) + "%";
+            document.getElementById("aov-slider").value = scenario.avgOrderValue;
+            document.getElementById("aov-value").textContent = "$" + scenario.avgOrderValue;
+            document.getElementById("ipp-slider").value = scenario.impressionsPerPerson;
+            document.getElementById("ipp-value").textContent = scenario.impressionsPerPerson;
+            
+            // Switch to input tab
+            switchTab('input-tab');
+            
+            // Recalculate
+            calculateAll();
+        }
+        
+        // Delete a scenario
+        function deleteScenario(index) {
+            if (confirm(`Are you sure you want to delete the scenario "${scenarios[index].name}"?`)) {
+                scenarios.splice(index, 1);
+                updateScenariosList();
+            }
+        }
+        
+        // Update ROI heatmap
+        function updateHeatmap() {
+            const heatmap = document.getElementById("roi-heatmap");
+            heatmap.innerHTML = '';
+            
+            // Get current values
+            const totalImpressions = parseInt(document.getElementById("total-impressions").value) || 0;
+            const dataSubscriptionCost = parseInt(document.getElementById("data-subscription-cost").value) || 0;
+            const currentCTR = parseFloat(document.getElementById("ctr").value) || 0;
+            const currentCVR = parseFloat(document.getElementById("cvr").value) || 0;
+            const avgOrderValue = parseFloat(document.getElementById("avg-order-value").value) || 0;
+            
+            // Define CTR and CVR ranges
+            const ctrValues = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0];
+            const cvrValues = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0];
+            
+            // Add header row
+            const headerRow = document.createElement("div");
+            headerRow.className = "heatmap-header";
+            headerRow.textContent = "CTR \\ CVR";
+            heatmap.appendChild(headerRow);
+            
+            // Add column headers
+            cvrValues.forEach(cvr => {
+                const cell = document.createElement("div");
+                cell.className = "heatmap-header";
+                cell.textContent = cvr.toFixed(1) + "%";
+                heatmap.appendChild(cell);
+            });
+            
+            // Add rows
+            ctrValues.forEach(ctr => {
+                // Add row header
+                const rowHeader = document.createElement("div");
+                rowHeader.className = "heatmap-row-header";
+                rowHeader.textContent = ctr.toFixed(1) + "%";
+                heatmap.appendChild(rowHeader);
+                
+                // Add cells
+                cvrValues.forEach(cvr => {
+                    const roi = calculateROI(totalImpressions, ctr, cvr, avgOrderValue, dataSubscriptionCost);
+                    const cell = document.createElement("div");
+                    cell.className = "heatmap-cell";
+                    
+                    // Color coding based on ROI
+                    if (roi < 0) {
+                        // Red for negative ROI
+                        const intensity = Math.min(100, Math.abs(roi) / 2);
+                        cell.style.backgroundColor = `rgba(231, 76, 60, ${intensity / 100})`;
+                    } else {
+                        // Green for positive ROI
+                        const intensity = Math.min(100, roi / 5);
+                        cell.style.backgroundColor = `rgba(46, 204, 113, ${intensity / 100})`;
+                    }
+                    
+                    // Highlight current CTR/CVR combination
+                    if (Math.abs(ctr - currentCTR) < 0.001 && Math.abs(cvr - currentCVR) < 0.001) {
+                        cell.style.border = "2px solid #3498db";
+                    }
+                    
+                    cell.textContent = roi.toFixed(0) + "%";
+                    heatmap.appendChild(cell);
+                });
+            });
+            
+            // Set grid columns
+            heatmap.style.gridTemplateColumns = `auto repeat(${cvrValues.length}, 1fr)`;
+        }
+        
+        // Update sensitivity chart
+        function updateSensitivityChart() {
+            const metric = document.getElementById("sensitivity-metric").value;
+            const range = parseInt(document.getElementById("sensitivity-range").value) || 50;
+            const chart = document.getElementById("sensitivity-chart");
+            
+            // Get current values
+            const totalImpressions = parseInt(document.getElementById("total-impressions").value) || 0;
+            const dataSubscriptionCost = parseInt(document.getElementById("data-subscription-cost").value) || 0;
+            const currentCTR = parseFloat(document.getElementById("ctr").value) || 0;
+            const currentCVR = parseFloat(document.getElementById("cvr").value) || 0;
+            const avgOrderValue = parseFloat(document.getElementById("avg-order-value").value) || 0;
+            
+            // Clear chart
+            chart.innerHTML = '';
+            
+            // Create chart container
+            const chartContainer = document.createElement("div");
+            chartContainer.style.position = "relative";
+            chartContainer.style.height = "100%";
+            chartContainer.style.padding = "20px 40px";
+            chartContainer.style.borderLeft = "1px solid #ddd";
+            chartContainer.style.borderBottom = "1px solid #ddd";
+            
+            // Create Y-axis label
+            const yAxisLabel = document.createElement("div");
+            yAxisLabel.style.position = "absolute";
+            yAxisLabel.style.transform = "rotate(-90deg)";
+            yAxisLabel.style.left = "-20px";
+            yAxisLabel.style.top = "50%";
+            yAxisLabel.style.fontSize = "12px";
+            yAxisLabel.style.color = "#7f8c8d";
+            yAxisLabel.textContent = "ROI (%)";
+            chartContainer.appendChild(yAxisLabel);
+            
+            // Create X-axis label
+            const xAxisLabel = document.createElement("div");
+            xAxisLabel.style.position = "absolute";
+            xAxisLabel.style.bottom = "-30px";
+            xAxisLabel.style.left = "50%";
+            xAxisLabel.style.transform = "translateX(-50%)";
+            xAxisLabel.style.fontSize = "12px";
+            xAxisLabel.style.color = "#7f8c8d";
+            
+            // Set x-axis label based on metric
+            switch (metric) {
+                case "ctr":
+                    xAxisLabel.textContent = "Click-Through Rate (%)";
+                    break;
+                case "cvr":
+                    xAxisLabel.textContent = "Conversion Rate (%)";
+                    break;
+                case "aov":
+                    xAxisLabel.textContent = "Avg. Reimbursement ($)";
+                    break;
+                case "impressions":
+                    xAxisLabel.textContent = "Total Impressions";
+                    break;
+            }
+            
+            chartContainer.appendChild(xAxisLabel);
+            
+            // Create data points
+            const steps = 10;
+            const data = [];
+            let minValue, maxValue, currentValue;
+            
+            switch (metric) {
+                case "ctr":
+                    currentValue = currentCTR;
+                    break;
+                case "cvr":
+                    currentValue = currentCVR;
+                    break;
+                case "aov":
+                    currentValue = avgOrderValue;
+                    break;
+                case "impressions":
+                    currentValue = totalImpressions;
+                    break;
+            }
+            
+            minValue = currentValue * (1 - range / 100);
+            maxValue = currentValue * (1 + range / 100);
+            
+            for (let i = 0; i <= steps; i++) {
+                const value = minValue + (maxValue - minValue) * (i / steps);
+                let roi;
+                
+                switch (metric) {
+                    case "ctr":
+                        roi = calculateROI(totalImpressions, value, currentCVR, avgOrderValue, dataSubscriptionCost);
+                        break;
+                    case "cvr":
+                        roi = calculateROI(totalImpressions, currentCTR, value, avgOrderValue, dataSubscriptionCost);
+                        break;
+                    case "aov":
+                        roi = calculateROI(totalImpressions, currentCTR, currentCVR, value, dataSubscriptionCost);
+                        break;
+                    case "impressions":
+                        roi = calculateROI(value, currentCTR, currentCVR, avgOrderValue, dataSubscriptionCost);
+                        break;
+                }
+                
+                data.push({ value, roi });
+            }
+            
+            // Find min and max ROI for scaling
+            const minROI = Math.min(...data.map(d => d.roi));
+            const maxROI = Math.max(...data.map(d => d.roi));
+            const roiRange = Math.max(Math.abs(minROI), Math.abs(maxROI)) * 1.2;
+            
+            // Create chart
+            const chartInner = document.createElement("div");
+            chartInner.style.display = "flex";
+            chartInner.style.alignItems = "center";
+            chartInner.style.justifyContent = "space-between";
+            chartInner.style.height = "100%";
+            
+            // Create zero line if range includes zero
+            if (minROI < 0 && maxROI > 0) {
+                const zeroLine = document.createElement("div");
+                zeroLine.style.position = "absolute";
+                zeroLine.style.left = "40px";
+                zeroLine.style.right = "0";
+                zeroLine.style.height = "1px";
+                zeroLine.style.backgroundColor = "#ddd";
+                zeroLine.style.top = `${100 - ((0 - minROI) / (maxROI - minROI) * 100)}%`;
+                chartContainer.appendChild(zeroLine);
+            }
+            
+            // Add data points
+            data.forEach((point, index) => {
+                const dataPoint = document.createElement("div");
+                dataPoint.style.position = "absolute";
+                dataPoint.style.width = "10px";
+                dataPoint.style.height = "10px";
+                dataPoint.style.borderRadius = "50%";
+                dataPoint.style.backgroundColor = point.roi >= 0 ? "#2ecc71" : "#e74c3c";
+                dataPoint.style.left = `${(index / steps) * 100}%`;
+                dataPoint.style.top = `${100 - ((point.roi - minROI) / (maxROI - minROI) * 100)}%`;
+                dataPoint.style.transform = "translate(-50%, -50%)";
+                
+                // Add tooltip
+                dataPoint.title = `${formatMetricValue(point.value, metric)}, ROI: ${point.roi.toFixed(2)}%`;
+                
+                chartInner.appendChild(dataPoint);
+                
+                // Connect points with line
+                if (index > 0) {
+                    const line = document.createElement("div");
+                    line.style.position = "absolute";
+                    line.style.height = "2px";
+                    line.style.backgroundColor = "#3498db";
+                    line.style.left = `${((index - 1) / steps) * 100}%`;
+                    line.style.width = `${(1 / steps) * 100}%`;
+                    line.style.top = `${100 - ((data[index - 1].roi - minROI) / (maxROI - minROI) * 100)}%`;
+                    
+                    // Calculate angle for line
+                    const x1 = ((index - 1) / steps);
+                    const y1 = ((data[index - 1].roi - minROI) / (maxROI - minROI));
+                    const x2 = (index / steps);
+                    const y2 = ((point.roi - minROI) / (maxROI - minROI));
+                    
+                    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                    const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) * 100;
+                    
+                    line.style.transform = `rotate(${-angle}deg)`;
+                    line.style.transformOrigin = "left center";
+                    line.style.width = `${length}%`;
+                    
+                    chartInner.appendChild(line);
+                }
+                
+                // Add label for current value
+                if (Math.abs(point.value - currentValue) / currentValue < 0.05) {
+                    const currentLabel = document.createElement("div");
+                    currentLabel.style.position = "absolute";
+                    currentLabel.style.left = `${(index / steps) * 100}%`;
+                    currentLabel.style.top = `${100 - ((point.roi - minROI) / (maxROI - minROI) * 100)}%`;
+                    currentLabel.style.transform = "translate(-50%, -150%)";
+                    currentLabel.style.backgroundColor = "#3498db";
+                    currentLabel.style.color = "white";
+                    currentLabel.style.padding = "3px 5px";
+                    currentLabel.style.borderRadius = "3px";
+                    currentLabel.style.fontSize = "10px";
+                    currentLabel.textContent = "Current";
+                    chartInner.appendChild(currentLabel);
+                }
+            });
+            
+            // Add Y-axis labels
+            for (let i = 0; i <= 4; i++) {
+                const label = document.createElement("div");
+                label.style.position = "absolute";
+                label.style.left = "0";
+                label.style.transform = "translateX(-30px)";
+                label.style.top = `${i * 25}%`;
+                label.style.fontSize = "10px";
+                label.style.color = "#7f8c8d";
+                
+                const value = maxROI - (i / 4) * (maxROI - minROI);
+                label.textContent = Math.round(value) + "%";
+                
+                chartContainer.appendChild(label);
+                
+                // Add grid line
+                const gridLine = document.createElement("div");
+                gridLine.style.position = "absolute";
+                gridLine.style.left = "40px";
+                gridLine.style.right = "0";
+                gridLine.style.height = "1px";
+                gridLine.style.backgroundColor = "#eee";
+                gridLine.style.top = `${i * 25}%`;
+                chartContainer.appendChild(gridLine);
+            }
+            
+            // Add X-axis labels
+            for (let i = 0; i <= 4; i++) {
+                const label = document.createElement("div");
+                label.style.position = "absolute";
+                label.style.bottom = "-20px";
+                label.style.left = `${i * 25}%`;
+                label.style.transform = "translateX(-50%)";
+                label.style.fontSize = "10px";
+                label.style.color = "#7f8c8d";
+                
+                const value = minValue + (i / 4) * (maxValue - minValue);
+                label.textContent = formatMetricValue(value, metric);
+                
+                chartContainer.appendChild(label);
+            }
+            
+            chartContainer.appendChild(chartInner);
+            chart.appendChild(chartContainer);
+        }
+        
+        // Format metric value based on type
+        function formatMetricValue(value, metric) {
+            switch (metric) {
+                case "ctr":
+                case "cvr":
+                    return value.toFixed(1) + "%";
+                case "aov":
+                    return "$" + Math.round(value);
+                case "impressions":
+                    return formatNumber(Math.round(value));
+                default:
+                    return value.toString();
+            }
+        }
+        
+        // Calculate from audience
+        function calculateFromAudience() {
+            // Get input values
+            const targetAudience = parseInt(document.getElementById("target-audience").value) || 0;
+            const frequencyCap = parseInt(document.getElementById("frequency-cap").value) || 0;
+            const targetFrequency = parseFloat(document.getElementById("target-frequency").value) || 0;
+            
+            // Calculate total impressions
+            const totalImpressions = targetAudience * targetFrequency;
+            
+            // Calculate CPM and costs
+            const dataCPMRate = calculateDataCPM(totalImpressions);
+            const impressionCost = (totalImpressions / 1000) * dataCPMRate;
+            
+            // Update audience tab results
+            document.getElementById("audience-cpm").value = dataCPMRate.toFixed(2);
+            document.getElementById("audience-total-impressions").textContent = formatNumber(totalImpressions);
+            document.getElementById("audience-impression-cost").textContent = "$" + formatNumber(impressionCost);
+            document.getElementById("reachable-audience").textContent = formatNumber(targetAudience);
+            
+            // Get performance metrics from main calculator
+            const ctr = parseFloat(document.getElementById("ctr").value) || 0;
+            const cvr = parseFloat(document.getElementById("cvr").value) || 0;
+            const avgOrderValue = parseFloat(document.getElementById("avg-order-value").value) || 0;
+            
+            // Calculate expected performance
+            const clicks = totalImpressions * (ctr / 100);
+            const conversions = clicks * (cvr / 100);
+            const revenue = conversions * avgOrderValue;
+            
+            // Update expected performance results
+            document.getElementById("audience-clicks").textContent = formatNumber(clicks);
+            document.getElementById("audience-conversions").textContent = formatNumber(conversions);
+            document.getElementById("audience-revenue").textContent = "$" + formatNumber(revenue);
+            
+            // Update frequency chart
+            updateFrequencyChart();
+        }
+        
+        // Calculate audience from impressions
+        function calculateAudienceFromImpressions() {
+            // Get input values
+            const availableImpressions = parseInt(document.getElementById("available-impressions").value) || 0;
+            const targetFrequency = parseFloat(document.getElementById("target-frequency-alt").value) || 0;
+            
+            // Calculate audience size
+            const audienceSize = Math.floor(availableImpressions / targetFrequency);
+            
+            // Update audience size inputs
+            document.getElementById("target-audience").value = audienceSize;
+            document.getElementById("target-frequency").value = targetFrequency;
+            
+            // Calculate as normal
+            calculateFromAudience();
+        }
+        
+        // Update frequency chart
+        function updateFrequencyChart() {
+            const chart = document.getElementById("frequency-chart");
+            chart.innerHTML = '';
