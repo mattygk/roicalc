@@ -2,5 +2,231 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  ...
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing ROI Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9fb;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+      color: #333;
+    }
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 12px 20px;
+      background-color: #5f4b8b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #483178;
+    }
+    .results {
+      margin-top: 30px;
+      background-color: #ecf0f1;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .result-row {
+      margin-bottom: 10px;
+    }
+    .result-label {
+      font-weight: bold;
+    }
+    .section {
+      margin-top: 40px;
+    }
+    .funnel-step {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 1.2em;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .funnel-step:nth-child(1) { background-color: #5f4b8b; color: #fff; width: 80%; margin-left: auto; margin-right: auto; }
+    .funnel-step:nth-child(2) { background-color: #8e79b4; color: #fff; width: 60%; margin-left: auto; margin-right: auto; }
+    .funnel-step:nth-child(3) { background-color: #c6bce5; color: #333; width: 40%; margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Marketing ROI Calculator</h1>
+
+    <div class="section" id="inputsSection">
+      <h2>Modeling Type</h2>
+      <label for="goalType">Choose Your Goal:</label>
+      <select id="goalType" onchange="toggleGoalInputs()">
+        <option value="conversion">Conversion Goal-Based</option>
+        <option value="manual">Manual Impressions</option>
+        <option value="budget">Budget-Based</option>
+        <option value="revenue" selected>Revenue Goal-Based</option>
+      </select>
+
+      <div id="goalInputs">
+        <label for="goalConversions" style="display:none;">Target Conversions</label>
+        <input type="text" id="goalConversions" value="500" oninput="formatInput(this)" style="display:none;">
+
+        <label for="budget" style="display:none;">Total Budget ($)</label>
+        <input type="text" id="budget" value="60,000" oninput="formatInput(this)" style="display:none;">
+
+        <label for="goalRevenue" style="display:none;">Target Revenue ($)</label>
+        <input type="text" id="goalRevenue" value="200,000" oninput="formatInput(this)" style="display:none;">
+
+        <button onclick="recalculate()">Calculate Funnel</button>
+      </div>
+
+      <h2>Campaign Inputs</h2>
+      <label for="impressions">Total Impressions</label>
+      <input type="text" id="impressions" value="1,000,000" oninput="formatInput(this)">
+
+      <label for="cpm">CPM (Cost per 1,000 Impressions)</label>
+      <input type="text" id="cpm" value="5.50" oninput="formatInput(this)">
+
+      <label for="subscription">Data Subscription Cost</label>
+      <input type="text" id="subscription" value="50,000" oninput="formatInput(this)">
+
+      <label for="ctr">Click Through Rate (CTR %)</label>
+      <input type="text" id="ctr" value="2" oninput="formatInput(this)">
+
+      <label for="cvr">Conversion Rate (CVR %)</label>
+      <input type="text" id="cvr" value="5" oninput="formatInput(this)">
+
+      <label for="reimbursement">Avg. Reimbursement ($)</label>
+      <input type="text" id="reimbursement" value="120" oninput="formatInput(this)">
+    </div>
+
+    <div class="section" id="funnelSection" style="display: none;">
+      <h2>Funnel Visualization</h2>
+      <div class="funnel-step" id="funnelImpressions">Impressions: 0</div>
+      <div class="funnel-step" id="funnelClicks">Clicks: 0</div>
+      <div class="funnel-step" id="funnelConversions">Conversions: 0</div>
+    </div>
+
+    <div class="section" id="dashboardSection" style="display: none;">
+      <h2>Performance Dashboard</h2>
+      <div class="results">
+        <div class="result-row"><span class="result-label">Revenue:</span> <span id="dashboardRevenue">$0</span></div>
+        <div class="result-row"><span class="result-label">Total Investment:</span> <span id="dashboardInvestment">$0</span></div>
+        <div class="result-row"><span class="result-label">Net Return:</span> <span id="dashboardNetReturn">$0</span></div>
+        <div class="result-row"><span class="result-label">ROI:</span> <span id="dashboardROI">0%</span></div>
+        <div class="result-row"><span class="result-label">ROAS:</span> <span id="dashboardROAS">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function parseNumber(val) {
+      return parseFloat(val.replace(/,/g, '')) || 0;
+    }
+
+    function formatInput(el) {
+      const raw = el.value.replace(/,/g, '');
+      if (!isNaN(raw) && raw !== '') {
+        el.value = Number(raw).toLocaleString();
+      }
+    }
+
+    function formatNumber(num) {
+      return Number(num).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    function updateFunnel(impressions, clicks, conversions) {
+      document.getElementById('funnelImpressions').textContent = `Impressions: ${formatNumber(impressions)}`;
+      document.getElementById('funnelClicks').textContent = `Clicks: ${formatNumber(clicks)}`;
+      document.getElementById('funnelConversions').textContent = `Conversions: ${formatNumber(conversions)}`;
+      document.getElementById('funnelSection').style.display = 'block';
+    }
+
+    function updateDashboard(revenue, investment, netReturn, roi, roas) {
+      document.getElementById('dashboardRevenue').textContent = `$${formatNumber(revenue)}`;
+      document.getElementById('dashboardInvestment').textContent = `$${formatNumber(investment)}`;
+      document.getElementById('dashboardNetReturn').textContent = `$${formatNumber(netReturn)}`;
+      document.getElementById('dashboardROI').textContent = `${formatNumber(roi)}%`;
+      document.getElementById('dashboardROAS').textContent = `${formatNumber(roas)}`;
+      document.getElementById('dashboardSection').style.display = 'block';
+    }
+
+    function recalculate() {
+      const goalType = document.getElementById('goalType').value;
+      const ctr = parseNumber(document.getElementById('ctr').value) / 100;
+      const cvr = parseNumber(document.getElementById('cvr').value) / 100;
+      const reimbursement = parseNumber(document.getElementById('reimbursement').value);
+      const cpm = parseNumber(document.getElementById('cpm').value);
+      const subscription = parseNumber(document.getElementById('subscription').value);
+      let impressions = parseNumber(document.getElementById('impressions').value);
+
+      if (goalType === 'budget') {
+        const budget = parseNumber(document.getElementById('budget').value);
+        const availableMediaBudget = budget - subscription;
+        impressions = availableMediaBudget / (cpm / 1000);
+        document.getElementById('impressions').value = formatNumber(impressions);
+      }
+      if (goalType === 'revenue') {
+        const goalRevenue = parseNumber(document.getElementById('goalRevenue').value);
+        const conversions = goalRevenue / reimbursement;
+        const clicks = conversions / cvr;
+        impressions = clicks / ctr;
+        document.getElementById('impressions').value = formatNumber(impressions);
+      }
+      if (goalType === 'conversion') {
+        const goalConversions = parseNumber(document.getElementById('goalConversions').value);
+        const clicks = goalConversions / cvr;
+        impressions = clicks / ctr;
+        document.getElementById('impressions').value = formatNumber(impressions);
+      }
+
+      const clicks = impressions * ctr;
+      const conversions = clicks * cvr;
+      const revenue = conversions * reimbursement;
+      const impressionCost = (impressions / 1000) * cpm;
+      const totalInvestment = impressionCost + subscription;
+      const netReturn = revenue - totalInvestment;
+      const roi = ((netReturn / totalInvestment) * 100).toFixed(2);
+      const roas = (revenue / totalInvestment).toFixed(2);
+
+      updateFunnel(impressions, clicks, conversions);
+      updateDashboard(revenue, totalInvestment, netReturn, roi, roas);
+    }
+
+    function toggleGoalInputs() {
+      const type = document.getElementById('goalType').value;
+      const show = (id, condition) => {
+        document.getElementById(id).style.display = condition ? 'block' : 'none';
+        document.querySelector(`label[for='${id}']`).style.display = condition ? 'block' : 'none';
+      };
+      show('budget', type === 'budget');
+      show('goalRevenue', type === 'revenue');
+      show('goalConversions', type === 'conversion');
+    }
+
+    recalculate();
+    toggleGoalInputs();
+  </script>
+</body>
 </html>
