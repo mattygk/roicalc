@@ -83,7 +83,11 @@
     function formatInput(el) {
       const raw = el.value.replace(/,/g, '');
       if (!isNaN(raw) && raw !== '') {
-        el.value = Number(raw).toLocaleString(undefined, { maximumFractionDigits: 2 });
+        const parsed = parseFloat(raw);
+        if (!isNaN(parsed)) {
+          el.value = parsed.toLocaleString(undefined, { maximumFractionDigits: 2 });
+        }
+      }
       }
     }
     
@@ -138,7 +142,8 @@
         conversions = clicks * cvr;
         impressionCost = (impressions / 1000) * cpm;
         clickCost = clicks * avgClickCost;
-        totalInvestment = subscription + impressionCost + clickCost;
+        conversionCost = conversions * avgClickCost;
+        totalInvestment = subscription + impressionCost + clickCost + conversionCost;
       const netReturn = revenue - totalInvestment;
       const roi = (netReturn / totalInvestment) * 100;
       const roas = revenue / totalInvestment;
