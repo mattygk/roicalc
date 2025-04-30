@@ -134,27 +134,12 @@
         const denominator = (cpm / 1000) + (ctr * avgClickCost);
         impressions = (budget - subscription) / denominator;
         impressionsInput.value = formatNumber(impressions);
-      } else if (goalType === 'revenue') {
-        const goalRevenue = parseNumber(document.getElementById('goalRevenue').value);
-        const conversions = goalRevenue / reimbursement;
-        const clicks = conversions / cvr;
-        impressions = clicks / ctr;
-        impressionsInput.value = formatNumber(impressions);
-      } else if (goalType === 'conversion') {
-        const goalConversions = parseNumber(document.getElementById('goalConversions').value);
-        const clicks = goalConversions / cvr;
-        impressions = clicks / ctr;
-        impressionsInput.value = formatNumber(impressions);
-      }
-
-      const clicks = impressions * ctr;
-      const conversions = clicks * cvr;
-      const revenue = conversions * reimbursement;
-      const impressionCost = (impressions / 1000) * cpm;
-      const clickCost = clicks * avgClickCost;
-      const totalInvestment = goalType === 'budget'
-        ? subscription + impressionCost + clickCost
-        : impressionCost + subscription + clickCost;
+        clicks = impressions * ctr;
+        conversions = clicks * cvr;
+        impressionCost = (impressions / 1000) * cpm;
+        clickCost = clicks * avgClickCost;
+        conversionCost = conversions * avgClickCost;
+        totalInvestment = subscription + impressionCost + clickCost + conversionCost;
       const netReturn = revenue - totalInvestment;
       const roi = (netReturn / totalInvestment) * 100;
       const roas = revenue / totalInvestment;
