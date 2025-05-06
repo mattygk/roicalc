@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing ROI Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f9f9fb; padding: 20px; max-width: 1200px; margin: auto; color: #333; }
+    .container { background-color: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    h1, h2 { text-align: center; color: #2c3e50; }
+    label { display: block; margin: 15px 0 5px; font-weight: bold; }
+    input[type="text"], select { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 12px 20px; background-color: #5f4b8b; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #483178; }
+    .results, .comparison-table { margin-top: 30px; background-color: #ecf0f1; padding: 20px; border-radius: 10px; text-align: center; }
+    table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #ccc; }
+    th { background-color: #ddd; }
+    small { color: #555; display: block; margin-top: -10px; margin-bottom: 20px; }
+  
+    input[readonly] {
+      background-color: #eee;
+      color: #555;
+    }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Marketing ROI Calculator</h1>
+
+    <label for="goalType">Choose Your Goal:</label>
+    <select id="goalType" onchange="toggleGoalInputs(); recalculate();">
+      <option value="manual">Manual Impressions</option>
+      <option value="budget">Budget-Based</option>
+      <option value="revenue" selected>Revenue Goal-Based</option>
+      <option value="conversion">Conversion Goal-Based</option>
+    </select>
+
+    <label for="budget" style="display:none;">Total Budget ($)</label>
+    <input type="text" id="budget" value="60000" style="display:none;" oninput="formatInput(this)">
+
+    <label for="goalRevenue" style="display:none;">Target Revenue ($)</label>
+    <input type="text" id="goalRevenue" value="200000" style="display:none;" oninput="formatInput(this)">
+
+    <label for="goalConversions" style="display:none;">Target Conversions</label>
+    <input type="text" id="goalConversions" value="500" style="display:none;" oninput="formatInput(this)">
+
+    
+
+    
+
+    <label for="subscription">Data Subscription Cost ($)</label>
+    <input type="text" id="subscription" value="50000" oninput="formatInput(this)">
+
+    <label for="ctr">Baseline CTR (%)</label>
+    <input type="text" id="ctr" value="2" oninput="formatInput(this)">
+
+    <label for="cvr">Baseline CVR (%)</label>
+    <input type="text" id="cvr" value="5" oninput="formatInput(this)">
+
+    <label for="reimbursement">Avg. Reimbursement ($)</label>
+    <input type="text" id="reimbursement" value="120" oninput="formatInput(this)">
+
+    <label for="avgClickCost">Average Click Cost ($)</label>
+    <input type="text" id="avgClickCost" value="1.50" oninput="formatInput(this)">
+    <small>Note: Click costs payable directly to media publishers (e.g., Google, Meta) are included in total investment.</small>
+
+    <label for="liftedCTR">Expected CTR After Lift (%)</label>
+    <input type="text" id="liftedCTR" value="2.5" oninput="formatInput(this)">
+
+    <label for="liftedCVR">Expected CVR After Lift (%)</label>
+    <input type="text" id="liftedCVR" value="6" oninput="formatInput(this)">
+
+    <div style="margin-bottom: 20px;">
+    <button onclick="recalculate()">Update Results</button>
+    </div>
+<div style="margin-top: 20px;"><label for="impressions">Total Impressions</label>
+    <input type="text" id="impressions" value="1000000" oninput="formatInput(this)" readonly>
+<label for="cpm">CPM (Cost per 1,000 Impressions)</label>
+    <input type="text" id="cpm" value="5.50" oninput="formatInput(this)"></div>
+    <small style="display:block; margin-top:10px;">After adjusting your inputs or selecting a goal, click <strong>Update Results</strong> to refresh the forecast.</small>
+
+    <div class="results" id="dashboardSection"></div>
+    <div class="comparison-table" id="comparisonSection"></div>
+  </div>
+
+  <script>
+    
+    function formatInput(el) {
+  let raw = el.value.replace(/,/g, '').replace(/[^0-9.]/g, '');
+  if (raw.includes('.')) {
+    const [intPart, decimalPart] = raw.split('.');
+    el.value = parseFloat(intPart + '.' + (decimalPart || '')).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
+  } else {
+    el.value = parseFloat(raw).toLocaleString();
+  }
+});
+      }
+    }
+    
+
+    function parseNumber(val) {
+      return parseFloat(val.replace(/,/g, '')) || 0;
+    }
+
+    function formatNumber(num) {
+      return Number(num).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    function toggleGoalInputs() {
+  const goalType = document.getElementById('goalType').value;
+  const impressionsField = document.getElementById('impressions');
+  impressionsField.readOnly = goalType !== 'manual';
+      const type = document.getElementById('goalType').value;
+      const toggle = (id, show) => {
+        document.getElementById(id).style.display = show ? 'block' : 'none';
+        document.querySelector(`label[for='${id}']`).style.display = show ? 'block' : 'none';
+      };
+      toggle('budget', type === 'budget');
+      toggle('goalRevenue', type === 'revenue');
+      toggle('goalConversions', type === 'conversion');
+    }
+
+    
+function recalculate() {
+  const goalType = document.getElementById('goalType').value;
+  const impressionsInput = document.getElementById('impressions');
+  const ctr = parseNumber(document.getElementById('ctr').value) / 100;
+  const cvr = parseNumber(document.getElementById('cvr').value) / 100;
+  const reimbursement = parseNumber(document.getElementById('reimbursement').value);
+  const cpm = parseNumber(document.getElementById('cpm').value);
+  const subscription = parseNumber(document.getElementById('subscription').value);
+  const avgClickCost = parseNumber(document.getElementById('avgClickCost').value);
+  const liftedCTR = parseNumber(document.getElementById('liftedCTR').value) / 100;
+  const liftedCVR = parseNumber(document.getElementById('liftedCVR').value) / 100;
+
+  let impressions = parseNumber(impressionsInput.value);
+  let conversions = 0, clicks = 0;
+
+  if (goalType === 'budget') {
+    const budget = parseNumber(document.getElementById('budget').value);
+    impressions = (budget - subscription) / ((cpm / 1000) + (ctr * avgClickCost));
+    impressionsInput.value = formatNumber(impressions);
+  }
+
+  if (goalType === 'revenue') {
+    const goalRevenue = parseNumber(document.getElementById('goalRevenue').value);
+    conversions = goalRevenue / reimbursement;
+    clicks = conversions / cvr;
+    impressions = clicks / ctr;
+    impressionsInput.value = formatNumber(impressions);
+  }
+
+  if (goalType === 'conversion') {
+    const goalConversions = parseNumber(document.getElementById('goalConversions').value);
+    clicks = goalConversions / cvr;
+    impressions = clicks / ctr;
+    impressionsInput.value = formatNumber(impressions);
+  }
+
+  clicks = impressions * ctr;
+  conversions = clicks * cvr;
+  const revenue = conversions * reimbursement;
+  const impressionCost = (impressions / 1000) * cpm;
+  const clickCost = clicks * avgClickCost;
+  const totalInvestment = clickCost;
+  const netReturn = revenue - totalInvestment;
+  const roi = (netReturn / totalInvestment) * 100;
+  const roas = revenue / totalInvestment;
+
+  const liftedClicks = impressions * liftedCTR;
+  const liftedConversions = liftedClicks * liftedCVR;
+  const liftedRevenue = liftedConversions * reimbursement;
+  const liftedClickCost = liftedClicks * avgClickCost;
+  const liftedTotalInvestment = subscription + impressionCost + liftedClickCost;
+  const liftedNetReturn = liftedRevenue - liftedTotalInvestment;
+  const liftedROI = (liftedNetReturn / liftedTotalInvestment) * 100;
+  const liftedROAS = liftedRevenue / liftedTotalInvestment;
+
+  document.getElementById('dashboardSection').innerHTML = `
+    <h2>Performance Dashboard</h2>
+    <div class="result-row"><strong>Revenue:</strong> $${formatNumber(revenue)}</div>
+    <div class="result-row"><strong>Total Investment:</strong> $${formatNumber(totalInvestment)}</div>
+    <div class="result-row"><strong>Net Return:</strong> $${formatNumber(netReturn)}</div>
+    <div class="result-row"><strong>ROI:</strong> ${formatNumber(roi)}%</div>
+    <div class="result-row"><strong>ROAS:</strong> ${formatNumber(roas)}</div>`;
+
+  document.getElementById('comparisonSection').innerHTML = `
+    <h2>Before vs. After Audience Lift</h2>
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>With Audience Lift</th></tr></thead>
+      <tbody>
+        <tr><td>Clicks</td><td>${formatNumber(clicks)}</td><td>${formatNumber(liftedClicks)}</td></tr>
+        <tr><td>Conversions</td><td>${formatNumber(conversions)}</td><td>${formatNumber(liftedConversions)}</td></tr>
+        <tr><td>Revenue</td><td>$${formatNumber(revenue)}</td><td>$${formatNumber(liftedRevenue)}</td></tr>
+        <tr><td>Total Investment</td><td>$${formatNumber(totalInvestment)}</td><td>$${formatNumber(liftedTotalInvestment)}</td></tr>
+        <tr><td>ROI</td><td>${formatNumber(roi)}%</td><td>${formatNumber(liftedROI)}%</td></tr>
+        <tr><td>ROAS</td><td>${formatNumber(roas)}</td><td>${formatNumber(liftedROAS)}</td></tr>
+      </tbody>
+    </table>`;
+}
+
+  </script>
+</body>
+</html>
