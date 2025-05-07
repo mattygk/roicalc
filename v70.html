@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Efficiency ROI Calculator</title>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9fb; color: #333; }
+    input[type="text"] { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 5px; }
+    label { font-weight: bold; display: block; margin-top: 20px; }
+    button { padding: 10px 20px; background: #5f4b8b; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .results { margin-top: 30px; padding: 20px; background: #eef; border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    th { background: #ddd; }
+  </style>
+</head>
+<body>
+  <h1>Fixed Conversion Goal Efficiency Calculator</h1>
+
+  <label for="goalConversions">Target Conversions</label>
+  <input type="text" id="goalConversions" value="500" />
+
+  <label for="ctr">CTR (%)</label>
+  <input type="text" id="ctr" value="2" />
+
+  <label for="cvr">CVR (%)</label>
+  <input type="text" id="cvr" value="5" />
+
+  <label for="cpc">Avg Click Cost ($)</label>
+  <input type="text" id="cpc" value="2" />
+
+  <label for="cpm">CPM ($)</label>
+  <input type="text" id="cpm" value="10" />
+
+  <label for="liftedCTR">Lifted CTR (%)</label>
+  <input type="text" id="liftedCTR" value="3" />
+
+  <label for="liftedCVR">Lifted CVR (%)</label>
+  <input type="text" id="liftedCVR" value="7" />
+
+  <button onclick="calculate()">Calculate Efficiency</button>
+
+  <div class="results" id="output"></div>
+
+  <script>
+    function parse(val) {
+      return parseFloat(val.replace(/,/g, '')) || 0;
+    }
+
+    function format(val) {
+      return Number(val).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    function calculate() {
+      const conversions = parse(document.getElementById("goalConversions").value);
+      const ctr = parse(document.getElementById("ctr").value) / 100;
+      const cvr = parse(document.getElementById("cvr").value) / 100;
+      const cpc = parse(document.getElementById("cpc").value);
+      const cpm = parse(document.getElementById("cpm").value);
+      const liftedCTR = parse(document.getElementById("liftedCTR").value) / 100;
+      const liftedCVR = parse(document.getElementById("liftedCVR").value) / 100;
+
+      // Base case
+      const baseClicks = conversions / cvr;
+      const baseImpressions = baseClicks / ctr;
+      const baseMediaCost = (baseImpressions / 1000) * cpm + baseClicks * cpc;
+
+      // Lifted case
+      const liftedClicks = conversions / liftedCVR;
+      const liftedImpressions = liftedClicks / liftedCTR;
+      const liftedMediaCost = (liftedImpressions / 1000) * cpm + liftedClicks * cpc;
+
+      const savings = baseMediaCost - liftedMediaCost;
+
+      document.getElementById("output").innerHTML = `
+        <h2>Efficiency Gains (Same Conversions, Lower Cost)</h2>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Current</th><th>With Audience Lift</th><th>Gain</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Impressions Needed</td><td>${format(baseImpressions)}</td><td>${format(liftedImpressions)}</td><td>${format(baseImpressions - liftedImpressions)}</td></tr>
+            <tr><td>Clicks Needed</td><td>${format(baseClicks)}</td><td>${format(liftedClicks)}</td><td>${format(baseClicks - liftedClicks)}</td></tr>
+            <tr><td>Total Media Cost</td><td>$${format(baseMediaCost)}</td><td>$${format(liftedMediaCost)}</td><td>$${format(savings)}</td></tr>
+          </tbody>
+        </table>`;
+    }
+  </script>
+</body>
+</html>
