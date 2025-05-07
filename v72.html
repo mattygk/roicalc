@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fixed Budget Efficiency Calculator (Corrected)</title>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9fb; color: #333; }
+    input[type="text"] { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 5px; }
+    label { font-weight: bold; display: block; margin-top: 20px; }
+    button { padding: 10px 20px; background: #5f4b8b; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .results { margin-top: 30px; padding: 20px; background: #eef; border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    th { background: #ddd; }
+  </style>
+</head>
+<body>
+  <h1>Fixed Budget Efficiency Calculator</h1>
+
+  <label for="budget">Total Budget ($)</label>
+  <input type="text" id="budget" value="60000" />
+
+  <label for="ctr">CTR (%)</label>
+  <input type="text" id="ctr" value="2" />
+
+  <label for="cvr">CVR (%)</label>
+  <input type="text" id="cvr" value="5" />
+
+  <label for="cpc">Avg Click Cost ($)</label>
+  <input type="text" id="cpc" value="2" />
+
+  <label for="cpm">CPM ($)</label>
+  <input type="text" id="cpm" value="10" />
+
+  <label for="liftedCTR">Lifted CTR (%)</label>
+  <input type="text" id="liftedCTR" value="3" />
+
+  <label for="liftedCVR">Lifted CVR (%)</label>
+  <input type="text" id="liftedCVR" value="7" />
+
+  <button onclick="calculate()">Calculate Efficiency</button>
+
+  <div class="results" id="output"></div>
+
+  <script>
+    function parse(val) {
+      return parseFloat(val.replace(/,/g, '')) || 0;
+    }
+
+    function format(val) {
+      return Number(val).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    function calcMaxConversions(budget, ctr, cvr, cpc, cpm) {
+      let impressions = 1000000;
+      let step = 1000;
+      let totalCost = 0;
+      let clicks = 0;
+
+      while (impressions > 0) {
+        clicks = impressions * ctr;
+        totalCost = (impressions / 1000) * cpm + clicks * cpc;
+        if (totalCost <= budget) break;
+        impressions -= step;
+      }
+
+      const conversions = clicks * cvr;
+      return { impressions, clicks, conversions, totalCost };
+    }
+
+    function calculate() {
+      const budget = parse(document.getElementById("budget").value);
+      const ctr = parse(document.getElementById("ctr").value) / 100;
+      const cvr = parse(document.getElementById("cvr").value) / 100;
+      const cpc = parse(document.getElementById("cpc").value);
+      const cpm = parse(document.getElementById("cpm").value);
+      const liftedCTR = parse(document.getElementById("liftedCTR").value) / 100;
+      const liftedCVR = parse(document.getElementById("liftedCVR").value) / 100;
+
+      const base = calcMaxConversions(budget, ctr, cvr, cpc, cpm);
+      const lift = calcMaxConversions(budget, liftedCTR, liftedCVR, cpc, cpm);
+
+      document.getElementById("output").innerHTML = `
+        <h2>Efficiency Gains (Fixed Budget, Corrected)</h2>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Current</th><th>With Audience Lift</th><th>Gain</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Impressions Served</td><td>${format(base.impressions)}</td><td>${format(lift.impressions)}</td><td>${format(lift.impressions - base.impressions)}</td></tr>
+            <tr><td>Clicks</td><td>${format(base.clicks)}</td><td>${format(lift.clicks)}</td><td>${format(lift.clicks - base.clicks)}</td></tr>
+            <tr><td>Conversions</td><td>${format(base.conversions)}</td><td>${format(lift.conversions)}</td><td>${format(lift.conversions - base.conversions)}</td></tr>
+            <tr><td>Total Cost</td><td>$${format(base.totalCost)}</td><td>$${format(lift.totalCost)}</td><td>$${format(lift.totalCost - base.totalCost)}</td></tr>
+          </tbody>
+        </table>`;
+    }
+  </script>
+</body>
+</html>
