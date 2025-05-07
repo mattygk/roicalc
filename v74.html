@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Marketing ROI Calculator (Unified with Fixed Budget Mode)</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 20px auto; padding: 20px; background-color: #f9f9fb; color: #333; }
+    h1, h2 { text-align: center; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 10px 20px; background-color: #5f4b8b; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .results { margin-top: 30px; background: #eef; padding: 20px; border-radius: 10px; }
+    table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+    th, td { padding: 10px; text-align: center; border: 1px solid #ccc; }
+    th { background-color: #ddd; }
+  </style>
+</head>
+<body>
+  <h1>Unified ROI Calculator with Fixed Budget Mode</h1>
+
+  <label for="goalType">Choose Your Goal Mode:</label>
+  <select id="goalType">
+    <option value="fixedBudget">Fixed Budget (Maximize Conversions)</option>
+    <option value="fixedConversions">Fixed Conversions (Minimize Cost)</option>
+  </select>
+
+  <label for="budget">Total Budget ($)</label>
+  <input type="text" id="budget" value="60000">
+
+  <label for="cpc">Average Click Cost ($)</label>
+  <input type="text" id="cpc" value="2">
+
+  <label for="ctr">CTR (%)</label>
+  <input type="text" id="ctr" value="2">
+
+  <label for="cvr">CVR (%)</label>
+  <input type="text" id="cvr" value="5">
+
+  <label for="cpm">CPM ($) for Audience Lift</label>
+  <input type="text" id="cpm" value="10">
+
+  <label for="liftedCTR">Lifted CTR (%)</label>
+  <input type="text" id="liftedCTR" value="3">
+
+  <label for="liftedCVR">Lifted CVR (%)</label>
+  <input type="text" id="liftedCVR" value="7">
+
+  <button onclick="calculate()">Calculate Results</button>
+
+  <div class="results" id="output"></div>
+
+  <script>
+    function parse(val) {
+      return parseFloat(val.replace(/,/g, '')) || 0;
+    }
+
+    function format(val) {
+      return Number(val).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    function calculate() {
+      const goal = document.getElementById("goalType").value;
+      const budget = parse(document.getElementById("budget").value);
+      const cpc = parse(document.getElementById("cpc").value);
+      const ctr = parse(document.getElementById("ctr").value);
+      const cvr = parse(document.getElementById("cvr").value);
+      const cpm = parse(document.getElementById("cpm").value);
+      const liftedCTR = parse(document.getElementById("liftedCTR").value);
+      const liftedCVR = parse(document.getElementById("liftedCVR").value);
+
+      let base = {}, lift = {};
+
+      if (goal === "fixedBudget") {
+        // Current: based only on CPC
+        base.clicks = budget / cpc;
+        base.impressions = base.clicks / (ctr / 100);
+        base.conversions = base.clicks * (cvr / 100);
+        base.cost = budget;
+
+        // Audience Lift: CPM + CPC constraint
+        let impressions = 1000000;
+        while (impressions > 0) {
+          let clicks = impressions * (liftedCTR / 100);
+          let impressionCost = (impressions / 1000) * cpm;
+          let clickCost = clicks * cpc;
+          let totalCost = impressionCost + clickCost;
+          if (totalCost <= budget) {
+            lift.impressions = impressions;
+            lift.clicks = clicks;
+            lift.conversions = clicks * (liftedCVR / 100);
+            lift.cost = totalCost;
+            break;
+          }
+          impressions -= 1000;
+        }
+      }
+
+      document.getElementById("output").innerHTML = `
+        <h2>Before vs. After Audience Lift</h2>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Current</th><th>With Audience Lift</th><th>Gain</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Impressions</td><td>${format(base.impressions)}</td><td>${format(lift.impressions)}</td><td>${format(lift.impressions - base.impressions)}</td></tr>
+            <tr><td>Clicks</td><td>${format(base.clicks)}</td><td>${format(lift.clicks)}</td><td>${format(lift.clicks - base.clicks)}</td></tr>
+            <tr><td>Conversions</td><td>${format(base.conversions)}</td><td>${format(lift.conversions)}</td><td>${format(lift.conversions - base.conversions)}</td></tr>
+            <tr><td>Total Cost</td><td>$${format(base.cost)}</td><td>$${format(lift.cost)}</td><td>$${format(lift.cost - base.cost)}</td></tr>
+          </tbody>
+        </table>`;
+    }
+  </script>
+</body>
+</html>
